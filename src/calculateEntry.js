@@ -11,25 +11,13 @@ const entrants = [
   { name: 'Carlos Nogueira', age: 50 },
 ];
 
-const countEntrants = (A) => {
-  const abc = { child: 0, adult: 0, senior: 0 };
-  abc.child = A.filter((E) => E.age < 18 && E.age > 0).length;
-  abc.adult = A.filter((E) => E.age > 17 && E.age < 50).length;
-  abc.senior = A.filter((E) => E.age > 49).length;
-  return abc;
-};
+const countEntrants = (A) => ({ child: A.filter((E) => E.age < 18 && E.age > 0).length,
+  adult: A.filter((E) => E.age > 17 && E.age < 50).length,
+  senior: A.filter((E) => E.age > 49).length });
 
-const calculateEntry = (A = [{ age: 0 }]) => {
-  if (Object.keys(A).length === 0) return 0;
-  let bca = 0;
-  const aaa = countEntrants(A);
-  bca += prices.child * aaa.child;
-  bca += prices.adult * aaa.adult;
-  bca += prices.senior * aaa.senior;
-  return bca;
-};
+const calculateEntry = (A = [{ age: 0 }]) => (Object.keys(A).length === 0 ? 0
+  : (prices.child * countEntrants(A).child)
+  + (prices.adult * countEntrants(A).adult)
+  + (prices.senior * countEntrants(A).senior));
 
 module.exports = { calculateEntry, countEntrants };
-
-// console.log(countEntrants(entrant));
-console.log(calculateEntry());
