@@ -33,34 +33,20 @@ const getAnimalSex = (A, { sex, sorted }) => species.filter((E) => E.location ==
     return abc;
   });
 
-const criarObjFiltroSex = (A, { sex, sorted }) => {
+const getAnimalMap = ({ includeNames, sex, sorted } = {}) => {
   const abc = {};
-  A.forEach((E) => {
-    abc[E] = getAnimalSex(E, { sex, sorted });
-  });
-  return abc;
-};
-
-const criarObj = (A) => {
-  const abc = {};
-  A.forEach((E) => {
+  areas.forEach((E) => {
+    if (sex && includeNames === true) {
+      abc[E] = getAnimalSex(E, { sex, sorted });
+      return abc;
+    }
+    if (includeNames === true) {
+      abc[E] = getAnimalName(E, { sorted });
+      return abc;
+    }
     abc[E] = getAnimalRegion(E);
   });
   return abc;
-};
-
-const criarObjComNomes = (A, { sorted }) => {
-  const abc = {};
-  A.forEach((E) => {
-    abc[E] = getAnimalName(E, { sorted });
-  });
-  return abc;
-};
-
-const getAnimalMap = ({ includeNames, sex, sorted } = criarObj(areas)) => {
-  if (sex && includeNames === true) return criarObjFiltroSex(areas, { sex, sorted });
-  if (includeNames === true) return criarObjComNomes(areas, { sorted });
-  return criarObj(areas);
 };
 
 module.exports = getAnimalMap;
